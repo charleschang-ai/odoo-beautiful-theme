@@ -15,8 +15,6 @@ bookmarks, etc. are not broken.
     'category': 'Hidden',
      "author": "Don Shan",
     "license": "LGPL-3",
-    'price': 39,
-    'currency': "USD",
     'license': 'LGPL-3',
     'depends': ['web', 'base_setup'],
     'data': [
