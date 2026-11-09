@@ -25,7 +25,7 @@
                                 <!-- 折叠/展开该应用的菜单树（任意应用均可展开浏览） -->
                                 <button t-if="!sb.collapsed and appSections(app).length"
                                         class="o_bt_sb_app_toggle"
-                                        t-att-title="isAppOpen(app) ? '收起' : '展开'"
+                                        t-att-title="isAppOpen(app) ? labels.collapse : labels.expand"
                                         t-on-click.stop="() => this.toggleApp(app)">
                                     <i class="fa" t-att-class="isAppOpen(app) ? 'fa-angle-down' : 'fa-angle-right'"/>
                                 </button>

@@ -4,7 +4,7 @@
     <t t-name="beautiful_theme.ThemeSwitcher">
         <div class="o_bt_systray">
             <!-- systray 入口按钮 -->
-            <button class="o_bt_toggle" t-on-click="toggle" title="切换主题 / Switch Theme" aria-label="Switch Theme">
+            <button class="o_bt_toggle" t-on-click="toggle" title="Switch Theme" aria-label="Switch Theme">
                 <i class="fa fa-paint-brush" role="img"/>
             </button>
 
@@ -15,8 +15,8 @@
             <aside class="o_bt_drawer" t-att-class="{ o_bt_open: state.open }">
                 <div class="o_bt_header">
                     <div>
-                        <h5 class="o_bt_title">界面主题</h5>
-                        <span class="o_bt_hint">仅对当前用户生效</span>
+                        <h5 class="o_bt_title">Interface Theme</h5>
+                        <span class="o_bt_hint">Applies to your account only</span>
                     </div>
                     <button class="o_bt_close" t-on-click="close" aria-label="Close">
                         <i class="fa fa-times"/>

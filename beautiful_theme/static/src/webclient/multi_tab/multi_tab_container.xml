@@ -17,7 +17,7 @@
                              t-on-click="() => this.activateTab(tab.id)">
                             <img t-if="tab.icon" class="o_bt_tab_icon" t-att-src="tab.icon" t-att-alt="tab.name"/>
                             <span class="o_bt_tab_name" t-esc="tab.name"/>
-                            <button class="o_bt_tab_close" t-att-title="'关闭'"
+                            <button class="o_bt_tab_close" title="Close"
                                     t-on-click.stop="() => this.closeTab(tab.id)">
                                 <i class="fa fa-times"/>
                             </button>
@@ -27,21 +27,21 @@
 
                 <!-- 右侧功能菜单 -->
                 <Dropdown>
-                    <button class="o_bt_tabbar_menu" title="标签操作">
+                    <button class="o_bt_tabbar_menu" title="Tab actions">
                         <i class="fa fa-ellipsis-h"/>
                     </button>
                     <t t-set-slot="content">
                         <DropdownItem onSelected="() => this.reloadActiveTab()">
-                            <i class="fa fa-refresh me-2"/>刷新当前标签
+                            <i class="fa fa-refresh me-2"/>Reload current tab
                         </DropdownItem>
                         <DropdownItem onSelected="() => this.openInNewWindow()">
-                            <i class="fa fa-external-link me-2"/>在浏览器新标签打开
+                            <i class="fa fa-external-link me-2"/>Open in a new browser tab
                         </DropdownItem>
                         <DropdownItem onSelected="() => this.closeOthers()">
-                            <i class="fa fa-times-circle-o me-2"/>关闭其他标签
+                            <i class="fa fa-times-circle-o me-2"/>Close other tabs
                         </DropdownItem>
                         <DropdownItem onSelected="() => this.closeAll()">
-                            <i class="fa fa-times-circle me-2"/>关闭所有标签
+                            <i class="fa fa-times-circle me-2"/>Close all tabs
                         </DropdownItem>
                     </t>
                 </Dropdown>

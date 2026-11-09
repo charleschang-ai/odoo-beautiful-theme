@@ -24,7 +24,7 @@
         <xpath expr="//t[@t-call='web.NavBar.AppsMenu']" position="before">
             <button t-if="!this.ui.isSmall"
                     class="o_bt_nav_toggle"
-                    t-att-title="btSidebar.collapsed ? '展开菜单' : '收起菜单'"
+                    t-att-title="btSidebar.collapsed ? btSidebarLabels.expand : btSidebarLabels.collapse"
                     t-on-click="() => this.btToggleSidebar()">
                 <i class="fa" t-att-class="btSidebar.collapsed ? 'fa-indent' : 'fa-outdent'"/>
             </button>

@@ -1,0 +1,189 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* beautiful_theme
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-09 12:21+0000\n"
+"PO-Revision-Date: 2026-11-09 12:21+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: beautiful_theme
+#. odoo-javascript
+#: code:addons/beautiful_theme/static/src/webclient/theme_switcher/theme_switcher.xml:0
+msgid "Applies to your account only"
+msgstr "仅对当前用户生效"
+
+#. module: beautiful_theme
+#: model:ir.model.fields,field_description:beautiful_theme.field_res_users_settings__ui_theme
+msgid "Backend Theme"
+msgstr "后台主题"
+
+#. module: beautiful_theme
+#. odoo-javascript
+#: code:addons/beautiful_theme/static/src/webclient/multi_tab/multi_tab_container.xml:0
+#: code:addons/beautiful_theme/static/src/webclient/theme_switcher/theme_switcher.xml:0
+msgid "Close"
+msgstr "关闭"
+
+#. module: beautiful_theme
+#. odoo-javascript
+#: code:addons/beautiful_theme/static/src/webclient/multi_tab/multi_tab_container.xml:0
+msgid "Close all tabs"
+msgstr "关闭所有标签"
+
+#. module: beautiful_theme
+#. odoo-javascript
+#: code:addons/beautiful_theme/static/src/webclient/multi_tab/multi_tab_container.xml:0
+msgid "Close other tabs"
+msgstr "关闭其他标签"
+
+#. module: beautiful_theme
+#. odoo-javascript
+#: code:addons/beautiful_theme/static/src/webclient/app_sidebar/app_sidebar.js:0
+msgid "Collapse"
+msgstr "收起"
+
+#. module: beautiful_theme
+#. odoo-javascript
+#: code:addons/beautiful_theme/static/src/webclient/navbar_patch.js:0
+msgid "Collapse menu"
+msgstr "收起菜单"
+
+#. module: beautiful_theme
+#. odoo-javascript
+#: code:addons/beautiful_theme/static/src/webclient/theme_switcher/theme_switcher.js:0
+msgid "Community default"
+msgstr "社区版默认"
+
+#. module: beautiful_theme
+#. odoo-javascript
+#: code:addons/beautiful_theme/static/src/webclient/app_sidebar/app_sidebar.xml:0
+msgid "Company Logo"
+msgstr "公司标志"
+
+#. module: beautiful_theme
+#: model:ir.model.fields,field_description:beautiful_theme.field_ir_http__display_name
+#: model:ir.model.fields,field_description:beautiful_theme.field_res_users_settings__display_name
+msgid "Display Name"
+msgstr "显示名称"
+
+#. module: beautiful_theme
+#: model:ir.model.fields.selection,name:beautiful_theme.selection__res_users_settings__ui_theme__emerald
+msgid "Emerald Fresh"
+msgstr "翠绿清爽"
+
+#. module: beautiful_theme
+#. odoo-javascript
+#: code:addons/beautiful_theme/static/src/webclient/theme_switcher/theme_switcher.js:0
+msgid "Emerald · Fresh mint"
+msgstr "翠绿 · 清爽薄荷"
+
+#. module: beautiful_theme
+#. odoo-javascript
+#: code:addons/beautiful_theme/static/src/webclient/app_sidebar/app_sidebar.js:0
+msgid "Expand"
+msgstr "展开"
+
+#. module: beautiful_theme
+#. odoo-javascript
+#: code:addons/beautiful_theme/static/src/webclient/navbar_patch.js:0
+msgid "Expand menu"
+msgstr "展开菜单"
+
+#. module: beautiful_theme
+#: model:ir.model,name:beautiful_theme.model_ir_http
+msgid "HTTP Routing"
+msgstr "HTTP 路由"
+
+#. module: beautiful_theme
+#: model:ir.model.fields,field_description:beautiful_theme.field_ir_http__id
+#: model:ir.model.fields,field_description:beautiful_theme.field_res_users_settings__id
+msgid "ID"
+msgstr "ID"
+
+#. module: beautiful_theme
+#. odoo-javascript
+#: code:addons/beautiful_theme/static/src/webclient/theme_switcher/theme_switcher.xml:0
+msgid "Interface Theme"
+msgstr "界面主题"
+
+#. module: beautiful_theme
+#: model:ir.model.fields.selection,name:beautiful_theme.selection__res_users_settings__ui_theme__obsidian
+msgid "Obsidian Gold"
+msgstr "曜金"
+
+#. module: beautiful_theme
+#. odoo-javascript
+#: code:addons/beautiful_theme/static/src/webclient/theme_switcher/theme_switcher.js:0
+msgid "Obsidian · Black gold luxury"
+msgstr "曜金 · 黑金奢华"
+
+#. module: beautiful_theme
+#. odoo-javascript
+#: code:addons/beautiful_theme/static/src/webclient/multi_tab/multi_tab_container.xml:0
+msgid "Open in a new browser tab"
+msgstr "在浏览器新标签打开"
+
+#. module: beautiful_theme
+#: model:ir.model.fields.selection,name:beautiful_theme.selection__res_users_settings__ui_theme__pearl
+msgid "Pearl White"
+msgstr "珍珠白"
+
+#. module: beautiful_theme
+#. odoo-javascript
+#: code:addons/beautiful_theme/static/src/webclient/theme_switcher/theme_switcher.js:0
+msgid "Pearl white · Enterprise look"
+msgstr "珍珠白 · 企业风"
+
+#. module: beautiful_theme
+#: model:ir.model.fields,help:beautiful_theme.field_res_users_settings__ui_theme
+msgid "Personal backend theme. Empty means the standard Odoo look."
+msgstr "个人后台主题。留空表示使用 Odoo 标准外观。"
+
+#. module: beautiful_theme
+#: model:ir.model.fields.selection,name:beautiful_theme.selection__res_users_settings__ui_theme__platinum
+msgid "Platinum Tech"
+msgstr "铂金科技"
+
+#. module: beautiful_theme
+#. odoo-javascript
+#: code:addons/beautiful_theme/static/src/webclient/theme_switcher/theme_switcher.js:0
+msgid "Platinum · Tech white"
+msgstr "铂金 · 科技白"
+
+#. module: beautiful_theme
+#. odoo-javascript
+#: code:addons/beautiful_theme/static/src/webclient/multi_tab/multi_tab_container.xml:0
+msgid "Reload current tab"
+msgstr "刷新当前标签"
+
+#. module: beautiful_theme
+#. odoo-javascript
+#: code:addons/beautiful_theme/static/src/webclient/theme_switcher/theme_switcher.xml:0
+msgid "Switch Theme"
+msgstr "切换主题"
+
+#. module: beautiful_theme
+#. odoo-javascript
+#: code:addons/beautiful_theme/static/src/webclient/multi_tab/multi_tab_container.xml:0
+msgid "Tab actions"
+msgstr "标签操作"
+
+#. module: beautiful_theme
+#: model:ir.model,name:beautiful_theme.model_res_users_settings
+msgid "User Settings"
+msgstr "用户设置"
+
+#. module: beautiful_theme
+#. odoo-javascript
+#: code:addons/beautiful_theme/static/src/webclient/multi_tab/multi_tab_container.js:0
+msgid "Workspace"
+msgstr "工作台"

@@ -5,6 +5,7 @@ import { router } from "@web/core/browser/router";
 import { Dropdown } from "@web/core/dropdown/dropdown";
 import { DropdownItem } from "@web/core/dropdown/dropdown_item";
 import { makeActionManager } from "@web/webclient/actions/action_service";
+import { _t } from "@web/core/l10n/translation";
 
 const STORAGE_KEY = "bt_multi_tabs";
 
@@ -192,7 +193,7 @@ export class MultiTabContainer extends Component {
         if (!tab) {
             tab = {
                 id,
-                name: anchor ? anchor.name : "工作台",
+                name: anchor ? anchor.name : _t("Workspace"),
                 icon: (app && app.webIconData) || false,
                 lastActionId: (anchor && anchor.actionID) || (app && app.actionID) || false,
             };

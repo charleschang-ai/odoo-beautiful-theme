@@ -55,7 +55,7 @@ Odoo 19 后台多主题切换模块（社区版）
             "beautiful_theme/static/src/scss/themes/obsidian/style.scss",
         ],
     },
-    'images': ['static/description/icon.png'],
+    'images': ['static/description/banner.png'],
     "installable": True,
     "application": False,
 }

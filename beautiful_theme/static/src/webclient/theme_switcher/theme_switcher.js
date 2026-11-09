@@ -2,6 +2,7 @@ import { Component, useState } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { user } from "@web/core/user";
 import { browser } from "@web/core/browser/browser";
+import { _t } from "@web/core/l10n/translation";
 
 /**
  * 主题注册表。新增主题时：
@@ -14,7 +15,7 @@ const THEMES = [
     {
         id: "",
         name: "Odoo Standard",
-        subtitle: "社区版默认",
+        subtitle: _t("Community default"),
         // 社区版默认顶栏是 #71639e（不是企业版的 #714B67）
         preview: "linear-gradient(120deg, #71639E 0%, #857AB3 100%)",
         dots: ["#71639E", "#017E84", "#F8F9FA"],
@@ -23,7 +24,7 @@ const THEMES = [
     {
         id: "pearl",
         name: "Pearl",
-        subtitle: "珍珠白 · 企业风",
+        subtitle: _t("Pearl white · Enterprise look"),
         preview: "linear-gradient(120deg, #FFFFFF 0%, #F1EDF2 100%)",
         dots: ["#714B67", "#017E84", "#F8F7F9"],
         ink: "dark",
@@ -31,7 +32,7 @@ const THEMES = [
     {
         id: "platinum",
         name: "Platinum",
-        subtitle: "铂金 · 科技白",
+        subtitle: _t("Platinum · Tech white"),
         preview: "linear-gradient(120deg, #FFFFFF 0%, #E9F0FA 100%)",
         dots: ["#2563EB", "#0F172A", "#F5F8FC"],
         ink: "dark",
@@ -39,7 +40,7 @@ const THEMES = [
     {
         id: "emerald",
         name: "Emerald",
-        subtitle: "翠绿 · 清爽薄荷",
+        subtitle: _t("Emerald · Fresh mint"),
         preview: "linear-gradient(120deg, #FFFFFF 0%, #E4F7EC 100%)",
         dots: ["#059669", "#10B981", "#F2FAF5"],
         ink: "dark",
@@ -47,7 +48,7 @@ const THEMES = [
     {
         id: "obsidian",
         name: "Obsidian Gold",
-        subtitle: "曜金 · 黑金奢华",
+        subtitle: _t("Obsidian · Black gold luxury"),
         preview: "linear-gradient(120deg, #0B0F19 0%, #1F2430 55%, #B8860B 100%)",
         dots: ["#1F2937", "#D4AF37", "#F6F2E9"],
         ink: "light",

@@ -1,6 +1,7 @@
 import { Component, useState } from "@odoo/owl";
 import { useService, useBus } from "@web/core/utils/hooks";
 import { user } from "@web/core/user";
+import { _t } from "@web/core/l10n/translation";
 import { sidebarState } from "./sidebar_state";
 
 /**
@@ -20,6 +21,8 @@ export class AppSidebar extends Component {
 
     setup() {
         this.menuService = useService("menu");
+        // 模板里 t-att-title 的字符串字面量不会被翻译，故在 JS 中用 _t
+        this.labels = { collapse: _t("Collapse"), expand: _t("Expand") };
         // 折叠状态与顶栏按钮共享（见 sidebar_state.js / navbar_patch.js）
         this.sb = useState(sidebarState);
         this.state = useState({
