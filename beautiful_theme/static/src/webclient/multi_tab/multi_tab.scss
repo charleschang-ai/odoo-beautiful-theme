@@ -1,0 +1,209 @@
+//
+// 多标签容器：标签栏 + 保活面板 + 全局 ghost
+// 颜色走 CSS 变量，主题可在自己的 style.scss 覆盖 --bt-tab-*
+//
+
+.o_bt_mt_root {
+    // 接管原 .o_action_manager 的定位职责，内部转纵向布局
+    position: relative; // 企业版主屏幕覆盖层的定位基准
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    --bt-tab-bg: rgba(15, 23, 42, .04);
+    --bt-tab-border: rgba(15, 23, 42, .10);
+    --bt-tab-text: #4B5563;
+    --bt-tab-active-bg: #FFFFFF;
+    --bt-tab-active-text: #111827;
+}
+
+// ---- 标签栏（左：可横滚的标签区；右：固定的功能菜单）----
+.o_bt_tabbar {
+    display: flex;
+    align-items: flex-end;
+    flex: 0 0 auto;
+    height: 34px;
+    padding: 4px 8px 0;
+}
+
+.o_bt_tabs_scroll {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none; // 标签多时横向滚动，不显示滚动条
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.o_bt_tabbar_menu {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 26px;
+    margin: 0 0 2px 6px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--bt-tab-text);
+    cursor: pointer;
+
+    &:hover {
+        background: var(--bt-tab-active-bg);
+        border-color: var(--bt-tab-border);
+    }
+}
+
+.o_bt_tab {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 0 1 auto;
+    min-width: 90px;
+    max-width: 180px;
+    height: 30px;
+    padding: 0 6px 0 10px;
+    border: 1px solid transparent;
+    border-bottom: 0;
+    border-radius: 8px 8px 0 0;
+    background: var(--bt-tab-bg);
+    color: var(--bt-tab-text);
+    font-size: 12.5px;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+
+    &:hover {
+        background: rgba(255, 255, 255, .65);
+    }
+
+    &.o_bt_tab_active {
+        background: var(--bt-tab-active-bg);
+        border-color: var(--bt-tab-border);
+        color: var(--bt-tab-active-text);
+        font-weight: 600;
+        box-shadow: 0 -2px 6px rgba(15, 23, 42, .05);
+    }
+}
+
+.o_bt_tab_icon {
+    flex: 0 0 auto;
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    object-fit: contain;
+}
+
+.o_bt_tab_name {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.o_bt_tab_close {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border: 0;
+    border-radius: 50%;
+    padding: 0;
+    background: transparent;
+    color: inherit;
+    font-size: 10px;
+    opacity: .55;
+    cursor: pointer;
+
+    &:hover {
+        opacity: 1;
+        background: rgba(15, 23, 42, .10);
+    }
+}
+
+// ---- 保活面板区 ----
+.o_bt_panes {
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+.o_bt_tab_pane {
+    // 绝对定位铺满面板区，给内部一条确定的高度链
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+
+    &.o_bt_pane_hidden {
+        display: none !important;
+    }
+
+    // 复刻官方 `.o_web_client > .o_action_manager > .o_action` 的布局链
+    // （官方全用直接子选择器，我们的面板多包了一层匹配不上，
+    //  丢失这些规则会导致内容无法滚动、控制面板/面包屑被挤出视野）
+    > .o_action {
+        height: 100%;
+        display: flex;
+        flex-flow: column nowrap;
+        overflow: hidden;
+
+        @include media-breakpoint-up(lg) {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+        }
+
+        > .o_control_panel {
+            flex: 0 0 auto;
+        }
+
+        .o_content {
+            overflow: auto;
+            height: 100%;
+        }
+
+        @include media-breakpoint-down(md) {
+            &:not(.o_action_delegate_scroll),
+            .o_form_view_container {
+                overflow: auto;
+
+                .o_content {
+                    overflow: initial;
+                }
+            }
+        }
+    }
+}
+
+// ---- 企业版全屏主屏幕覆盖层 ----
+// 盖住标签栏与面板区（主屏幕是全屏形态）；标签树在下层保活。
+// 背景由官方 .o_home_menu_background 规则提供（主题经 --homeMenu-bg-* 换肤）
+.o_bt_home_overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    display: flex;
+    flex-flow: column nowrap;
+    overflow: hidden; // 内部 .o_home_menu 自带 h-100 overflow-auto
+}
+
+// ---- 全局管理器隐藏挂载 ----
+.o_bt_ghost {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+}

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="default_url_prefix" model="ir.config_parameter">
+        <field name="key">web_url_prefix.prefix</field>
+        <field name="value">app</field>
+    </record>
+</odoo>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        在官方的 color_scheme 分支（t-if dark / t-else light）中间插入
+        我们的主题分支。ui_theme 由 ir.http.webclient_rendering_context() 注入。
+        主题包只替换 CSS（t-js="false"），JS 仍由上方的 web.assets_web 提供。
+    -->
+    <template id="webclient_bootstrap" inherit_id="web.webclient_bootstrap" name="Beautiful Theme Assets">
+        <xpath expr="//t[@t-else='']" position="before">
+            <t t-elif="ui_theme == 'pearl'">
+                <t t-call-assets="beautiful_theme.assets_web_pearl" media="screen" t-js="false"/>
+            </t>
+            <t t-elif="ui_theme == 'platinum'">
+                <t t-call-assets="beautiful_theme.assets_web_platinum" media="screen" t-js="false"/>
+            </t>
+            <t t-elif="ui_theme == 'emerald'">
+                <t t-call-assets="beautiful_theme.assets_web_emerald" media="screen" t-js="false"/>
+            </t>
+            <t t-elif="ui_theme == 'obsidian'">
+                <t t-call-assets="beautiful_theme.assets_web_obsidian" media="screen" t-js="false"/>
+            </t>
+        </xpath>
+    </template>
+</odoo>

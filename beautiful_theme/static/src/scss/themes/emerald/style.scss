@@ -1,0 +1,107 @@
+///
+/// Emerald · 翠绿 —— 薄荷渐变背景与系统级配色覆盖
+/// （追加在整个资源包末尾，可安全覆盖组件样式）
+///
+
+// 主题局部色板
+$-em-line: #E2EEE6;             // 描边
+$-em-tint: #F4FBF7;             // 极淡薄荷（表头等）
+$-em-hover: rgba(5, 150, 105, .045);
+$-em-shadow: rgba(6, 78, 59, .10);
+
+// ---- 侧边栏配色（薄荷浅调渐变，与内容区区分）----
+.o_bt_sidebar {
+    --bt-sb-bg: linear-gradient(180deg, #F0FAF4 0%, #E7F4EC 100%);
+    --bt-sb-border: #D9EBE1;
+    --bt-sb-text: #2E463C;
+    --bt-sb-muted: #5E7268;
+    --bt-sb-hover: rgba(5, 150, 105, .06);
+    --bt-sb-active-bg: rgba(5, 150, 105, .11);
+    --bt-sb-active-text: #047857;
+}
+
+.o_web_client {
+    // 冷白渐变 + 右上角一抹翡翠辉光
+    background-image:
+        radial-gradient(1100px 520px at 88% -8%, rgba(16, 185, 129, .07), transparent 60%),
+        linear-gradient(165deg, #FBFEFC 0%, #F2FAF5 45%, #ECF7F0 100%);
+    background-attachment: fixed, fixed;
+
+    .o_action_manager {
+        background: transparent;
+    }
+
+    // ---- 顶栏：薄荷渐变下加一层极浅投影，悬浮感 ----
+    .o_main_navbar {
+        box-shadow: 0 1px 2px rgba(6, 78, 59, .04);
+    }
+
+    // ---- 控制面板：半透明磨砂 ----
+    .o_control_panel {
+        background: rgba(255, 255, 255, .72);
+        backdrop-filter: blur(12px);
+    }
+
+    // ---- Form 视图：白卡片浮于渐变之上 ----
+    .o_form_view {
+        background: transparent;
+
+        .o_form_sheet_bg {
+            background: transparent;
+        }
+
+        .o_form_sheet {
+            --formView-sheet-border-radius-md: 12px;
+            border-color: $-em-line;
+            box-shadow: 0 1px 2px rgba(6, 78, 59, .04), 0 12px 32px -16px $-em-shadow;
+        }
+    }
+
+    // ---- List 视图：薄荷表头 + 柔和悬停 ----
+    .o_list_view {
+        .o_list_renderer {
+            --ListRenderer-thead-bg-color: #{$-em-tint};
+        }
+
+        .o_list_table {
+            --table-hover-bg: #{$-em-hover};
+
+            thead th {
+                color: #4A6157;
+            }
+        }
+    }
+
+    // ---- Kanban：透出渐变，卡片精致化 ----
+    .o_kanban_view,
+    .o_kanban_renderer {
+        background: transparent;
+    }
+
+    .o_kanban_record {
+        border: 1px solid $-em-line;
+        border-radius: 10px;
+        box-shadow: 0 1px 2px rgba(6, 78, 59, .04), 0 6px 16px -10px $-em-shadow;
+    }
+
+    // ---- 纤细滚动条 ----
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(74, 97, 87, .30) transparent;
+    }
+}
+
+// ---- 弹窗：圆角 + 柔和投影 ----
+.modal-content {
+    border: 1px solid $-em-line;
+    border-radius: 14px;
+    box-shadow: 0 24px 64px -24px rgba(6, 78, 59, .26);
+}
+
+// ---- 企业版全屏主屏幕（Home Menu）：薄荷白底 ----
+// 官方背景规则由 CSS 变量驱动（见 web_enterprise 的 home_menu_background.scss）
+.o_home_menu_background,
+.o_web_client.o_home_menu_background {
+    --homeMenu-bg-color: #EEF8F2;
+    --homeMenu-bg-image: url("/web_enterprise/static/img/background-light.svg");
+}

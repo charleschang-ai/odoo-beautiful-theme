@@ -1,0 +1,64 @@
+///
+/// Platinum · 铂金（科技白 · 霜银渐变 + 电光蓝）
+/// ---------------------------------------------------------------------------
+/// 设计语言：Stripe / Vercel 式科技感 —— 近乎单色的冷石板灰阶，
+/// 唯一的强调色是电光蓝 #2563EB，白色霜银渐变顶栏。
+/// 本文件被插入到所有官方变量之前，!default 声明全部让位于这里的值。
+///
+/// 注意：品牌变量必须保持纯色（官方对其做 darken()/mix() 派生计算），
+/// 渐变只允许出现在 $o-navbar-background 与 style.scss 的规则里。
+///
+
+// = 灰阶（冷石板刻度）==========================================
+$o-gray-100: #F1F5F9;
+$o-gray-200: #E2E8F0;
+$o-gray-300: #CBD5E1;
+$o-gray-400: #94A3B8;
+$o-gray-500: #64748B;
+$o-gray-600: #475569;
+$o-gray-700: #334155;
+$o-gray-800: #1E293B;
+$o-gray-900: #0F172A;
+
+// = 品牌色（电光蓝）============================================
+$o-community-color: #2563EB;
+$o-brand-odoo: #2563EB;
+$o-brand-primary: #2563EB;
+$o-action: #2563EB;
+$o-main-link-color: #1D4ED8;
+
+// 组件激活态（电光蓝 8% 淡化）
+$o-component-active-color: #0F172A;
+$o-component-active-bg: #E8F0FE;
+$o-component-active-border: #2563EB;
+
+// = 顶部菜单栏（霜银渐变 · 石板灰文字）=========================
+$o-navbar-background: linear-gradient(180deg, #FFFFFF 0%, #F5F8FD 100%);
+$o-navbar-border-bottom: 1px solid #E3E9F2;
+$o-navbar-padding-v: 6px;
+$o-navbar-entry-border-radius: 8px;
+$o-navbar-entry-color: #334155;
+$o-navbar-entry-color--hover: #0F172A;
+$o-navbar-entry-bg--hover: rgba(#2563EB, .08);
+$o-navbar-brand-color: #334155;
+$o-navbar-badge-bg: #2563EB;
+$o-navbar-badge-color: #FFFFFF;
+$o-navbar-badge-text-shadow: none;
+
+// = 页面 / 视图背景 ============================================
+// 纯色兜底（$body-bg 等处使用）；渐变在 style.scss 中叠加
+$o-webclient-background-color: #F5F8FC;
+$o-view-background-color: #FFFFFF;
+
+// 控制面板
+$o-control-panel-border-bottom: 1px solid #E8EDF5;
+
+// = 企业版（web_enterprise）====================================
+// 企业版以 $o-enterprise-color 派生 $o-brand-odoo/$o-brand-primary，
+// 必须与主题品牌色对齐，否则过期面板等企业组件颜色跑偏
+$o-enterprise-color: #2563EB;
+$o-enterprise-action-color: #2563EB;
+
+// 全屏主屏幕（Home Menu）：应用名文字
+$o-home-menu-caption-color: #334155;
+$o-home-menu-caption-shadow: none;

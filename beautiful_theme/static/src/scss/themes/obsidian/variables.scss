@@ -1,0 +1,58 @@
+///
+/// Obsidian Gold · 曜金（石墨 × 香槟金 · 商务奢华风）
+/// ---------------------------------------------------------------------------
+/// 设计语言：黑金奢华 —— 曜石渐变顶栏 + 金线描边 + 香槟金强调，
+/// 页面是暖象牙色渐变，白卡片浮于其上。
+/// 本文件被插入到所有官方变量之前，!default 声明全部让位于这里的值。
+///
+/// 注意：品牌变量必须保持纯色（官方对其做 darken()/mix() 派生计算），
+/// 渐变只允许出现在 $o-navbar-background 与 style.scss 的规则里。
+///
+
+// = 品牌色（石墨 + 金）=========================================
+$o-community-color: #1F2937;
+$o-brand-odoo: #111827;
+$o-brand-primary: #1F2937;
+$o-action: #B8860B;
+$o-main-link-color: #8F6A0B;
+
+// = 状态色（沉稳刻度）==========================================
+$o-success: #15803D;
+$o-info: #0284C7;
+$o-warning: #D97706;
+$o-danger: #B91C1C;
+
+// 组件激活态（香槟金淡化）
+$o-component-active-color: #000000;
+$o-component-active-bg: #F5EBD3;
+$o-component-active-border: #B8860B;
+
+// = 顶部菜单栏（曜石渐变 + 金线描边）===========================
+$o-navbar-background: linear-gradient(100deg, #0B0F19 0%, #1C2230 55%, #33405A 100%);
+$o-navbar-border-bottom: 1px solid rgba(#D4AF37, .40);
+$o-navbar-entry-border-radius: 6px;
+$o-navbar-entry-color: rgba(#EFE6CE, .92);
+$o-navbar-entry-color--hover: #F8EFD8;
+$o-navbar-entry-bg--hover: rgba(#D4AF37, .18);
+$o-navbar-brand-color: rgba(#EFE6CE, .92);
+$o-navbar-badge-bg: #D4AF37;
+$o-navbar-badge-color: #111827;
+$o-navbar-badge-text-shadow: none;
+
+// = 页面 / 视图背景 ============================================
+// 暖象牙纯色兜底；渐变在 style.scss 中叠加
+$o-webclient-background-color: #F6F2E9;
+$o-view-background-color: #FFFFFF;
+
+// 控制面板
+$o-control-panel-border-bottom: 1px solid #EBE4D5;
+
+// = 企业版（web_enterprise）====================================
+// 企业版以 $o-enterprise-color 派生 $o-brand-odoo/$o-brand-primary，
+// 必须与主题品牌色对齐，否则过期面板等企业组件颜色跑偏
+$o-enterprise-color: #1F2937;
+$o-enterprise-action-color: #B8860B;
+
+// 全屏主屏幕（Home Menu）：曜石深底 → 应用名用浅金文字
+$o-home-menu-caption-color: #EFE6CE;
+$o-home-menu-caption-shadow: 0 1px 2px rgba(0, 0, 0, .55);

@@ -1,0 +1,105 @@
+///
+/// Obsidian Gold · 曜金 —— 象牙渐变背景与系统级配色覆盖
+/// （追加在整个资源包末尾，可安全覆盖组件样式）
+///
+
+// 主题局部色板
+$-ob-line: #EBE4D5;             // 描边
+$-ob-tint: #F9F5EB;             // 极淡米金（表头等）
+$-ob-hover: rgba(184, 134, 11, .05);
+$-ob-shadow: rgba(63, 50, 12, .12);
+
+// ---- 侧边栏配色（曜石深色 + 香槟金点缀，与顶栏一体）----
+.o_bt_sidebar {
+    --bt-sb-bg: linear-gradient(180deg, #0E1320 0%, #1A2130 100%);
+    --bt-sb-border: rgba(212, 175, 55, .28);
+    --bt-sb-text: rgba(239, 230, 206, .92);
+    --bt-sb-muted: rgba(239, 230, 206, .60);
+    --bt-sb-hover: rgba(212, 175, 55, .12);
+    --bt-sb-active-bg: rgba(212, 175, 55, .18);
+    --bt-sb-active-text: #F3E5BE;
+}
+
+.o_web_client {
+    // 暖象牙 → 米金渐变 + 右上角一抹金色辉光
+    background-image:
+        radial-gradient(1100px 520px at 88% -8%, rgba(212, 175, 55, .08), transparent 60%),
+        linear-gradient(165deg, #FAF7F0 0%, #F4EFE4 50%, #FBF8F1 100%);
+    background-attachment: fixed, fixed;
+
+    .o_action_manager {
+        background: transparent;
+    }
+
+    // ---- 控制面板：半透明磨砂（暖白）----
+    .o_control_panel {
+        background: rgba(250, 248, 242, .72);
+        backdrop-filter: blur(12px);
+    }
+
+    // ---- Form 视图：白卡片浮于渐变之上 ----
+    .o_form_view {
+        background: transparent;
+
+        .o_form_sheet_bg {
+            background: transparent;
+        }
+
+        .o_form_sheet {
+            --formView-sheet-border-radius-md: 12px;
+            border-color: $-ob-line;
+            box-shadow: 0 1px 2px rgba(63, 50, 12, .05), 0 12px 32px -16px $-ob-shadow;
+        }
+    }
+
+    // ---- List 视图：米金表头 + 柔和悬停 ----
+    .o_list_view {
+        .o_list_renderer {
+            --ListRenderer-thead-bg-color: #{$-ob-tint};
+        }
+
+        .o_list_table {
+            --table-hover-bg: #{$-ob-hover};
+
+            thead th {
+                color: #6B5D3F;
+            }
+        }
+    }
+
+    // ---- Kanban：透出渐变，卡片精致化 ----
+    .o_kanban_view,
+    .o_kanban_renderer {
+        background: transparent;
+    }
+
+    .o_kanban_record {
+        border: 1px solid $-ob-line;
+        border-radius: 10px;
+        box-shadow: 0 1px 2px rgba(63, 50, 12, .05), 0 6px 16px -10px $-ob-shadow;
+    }
+
+    // ---- 纤细滚动条 ----
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(107, 93, 63, .30) transparent;
+    }
+}
+
+// ---- 弹窗：圆角 + 柔和投影 ----
+.modal-content {
+    border: 1px solid $-ob-line;
+    border-radius: 14px;
+    box-shadow: 0 24px 64px -24px rgba(63, 50, 12, .30);
+}
+
+// ---- 企业版全屏主屏幕（Home Menu）：曜石深底 + 金色辉光 ----
+// 官方背景规则由 CSS 变量驱动（见 web_enterprise 的 home_menu_background.scss）；
+// 应用名浅金文字见 variables.scss 的 $o-home-menu-caption-color
+.o_home_menu_background,
+.o_web_client.o_home_menu_background {
+    --homeMenu-bg-color: #10141F;
+    --homeMenu-bg-image:
+        radial-gradient(1100px 520px at 88% -8%, rgba(212, 175, 55, .10), transparent 60%),
+        linear-gradient(165deg, #0B0F19 0%, #161C2A 55%, #1C2230 100%);
+}

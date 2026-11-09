@@ -1,0 +1,100 @@
+///
+/// Pearl · 珍珠白 —— 渐变背景与系统级配色覆盖
+/// （追加在整个资源包末尾，可安全覆盖组件样式）
+///
+
+// 主题局部色板
+$-pearl-line: #ECE9EE;          // 描边
+$-pearl-ink: #1F2937;           // 主文字
+$-pearl-tint: #FAF8FB;          // 极淡紫白（表头等）
+$-pearl-hover: rgba(113, 75, 103, .045);
+$-pearl-shadow: rgba(63, 39, 57, .10);
+
+// ---- 侧边栏配色（藕紫浅调渐变，与内容区区分）----
+.o_bt_sidebar {
+    --bt-sb-bg: linear-gradient(180deg, #F9F5F8 0%, #F2EBF1 100%);
+    --bt-sb-border: #E7DFE6;
+    --bt-sb-text: #374151;
+    --bt-sb-muted: #6B7280;
+    --bt-sb-hover: rgba(113, 75, 103, .06);
+    --bt-sb-active-bg: rgba(113, 75, 103, .12);
+    --bt-sb-active-text: #714B67;
+}
+
+.o_web_client {
+    // 珍珠白 → 淡藕紫渐变，fixed 避免滚动错位
+    background: linear-gradient(165deg, #FDFCFD 0%, #F8F6F9 45%, #F4F1F5 100%) fixed;
+
+    .o_action_manager {
+        background: transparent;
+    }
+
+    // ---- 控制面板：半透明磨砂 ----
+    .o_control_panel {
+        background: rgba(255, 255, 255, .78);
+        backdrop-filter: blur(10px);
+    }
+
+    // ---- Form 视图：白卡片浮于渐变之上 ----
+    .o_form_view {
+        background: transparent;
+
+        .o_form_sheet_bg {
+            background: transparent;
+        }
+
+        .o_form_sheet {
+            --formView-sheet-border-radius-md: 12px;
+            border-color: $-pearl-line;
+            box-shadow: 0 1px 2px rgba(63, 39, 57, .04), 0 12px 32px -16px $-pearl-shadow;
+        }
+    }
+
+    // ---- List 视图：淡紫白表头 + 柔和悬停 ----
+    .o_list_view {
+        .o_list_renderer {
+            --ListRenderer-thead-bg-color: #{$-pearl-tint};
+        }
+
+        .o_list_table {
+            --table-hover-bg: #{$-pearl-hover};
+
+            thead th {
+                color: #5F636F;
+            }
+        }
+    }
+
+    // ---- Kanban：透出渐变，卡片精致化 ----
+    .o_kanban_view,
+    .o_kanban_renderer {
+        background: transparent;
+    }
+
+    .o_kanban_record {
+        border: 1px solid $-pearl-line;
+        border-radius: 10px;
+        box-shadow: 0 1px 2px rgba(63, 39, 57, .04), 0 6px 16px -10px $-pearl-shadow;
+    }
+
+    // ---- 纤细滚动条 ----
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(95, 99, 111, .30) transparent;
+    }
+}
+
+// ---- 弹窗：圆角 + 柔和投影 ----
+.modal-content {
+    border: 1px solid $-pearl-line;
+    border-radius: 14px;
+    box-shadow: 0 24px 64px -24px rgba(63, 39, 57, .28);
+}
+
+// ---- 企业版全屏主屏幕（Home Menu）：珍珠白底 ----
+// 官方背景规则由 CSS 变量驱动（见 web_enterprise 的 home_menu_background.scss）
+.o_home_menu_background,
+.o_web_client.o_home_menu_background {
+    --homeMenu-bg-color: #F6F3F6;
+    --homeMenu-bg-image: url("/web_enterprise/static/img/background-light.svg");
+}

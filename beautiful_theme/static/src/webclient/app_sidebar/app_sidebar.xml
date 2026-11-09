@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="beautiful_theme.AppSidebar">
+        <aside class="o_bt_sidebar d-print-none" t-att-class="{ o_bt_sb_collapsed: sb.collapsed }">
+            <!-- 公司品牌区（比普通菜单项更高；无 logo 时该路由自动回退 Odoo 默认图） -->
+            <div class="o_bt_sb_brand" t-att-title="companyName">
+                <img class="o_bt_sb_logo" src="/web/binary/company_logo" alt="Company Logo"/>
+                <span class="o_bt_sb_company o_bt_sb_app_name" t-esc="companyName"/>
+            </div>
+
+            <nav class="o_bt_sb_body">
+                <ul class="o_bt_sb_apps">
+                    <t t-foreach="apps" t-as="app" t-key="app.id">
+                        <li>
+                            <div class="o_bt_sb_app_row" t-att-class="{ o_bt_sb_active: isCurrentApp(app) }">
+                                <button class="o_bt_sb_app"
+                                        t-att-title="app.name"
+                                        t-att-data-menu-xmlid="app.xmlid"
+                                        t-on-click="() => this.onAppClick(app)">
+                                    <img t-if="app.webIconData" class="o_bt_sb_app_icon" t-att-src="app.webIconData" t-att-alt="app.name"/>
+                                    <span t-else="" class="o_bt_sb_app_icon o_bt_sb_app_letter" t-esc="app.name[0]"/>
+                                    <span class="o_bt_sb_app_name" t-esc="app.name"/>
+                                </button>
+                                <!-- 折叠/展开该应用的菜单树（任意应用均可展开浏览） -->
+                                <button t-if="!sb.collapsed and appSections(app).length"
+                                        class="o_bt_sb_app_toggle"
+                                        t-att-title="isAppOpen(app) ? '收起' : '展开'"
+                                        t-on-click.stop="() => this.toggleApp(app)">
+                                    <i class="fa" t-att-class="isAppOpen(app) ? 'fa-angle-down' : 'fa-angle-right'"/>
+                                </button>
+                            </div>
+
+                            <ul t-if="!sb.collapsed and isAppOpen(app) and appSections(app).length" class="o_bt_sb_tree">
+                                <t t-foreach="appSections(app)" t-as="section" t-key="section.id">
+                                    <t t-call="beautiful_theme.AppSidebar.MenuItem">
+                                        <t t-set="item" t-value="section"/>
+                                        <t t-set="depth" t-value="0"/>
+                                    </t>
+                                </t>
+                            </ul>
+                        </li>
+                    </t>
+                </ul>
+            </nav>
+        </aside>
+    </t>
+
+    <!-- 递归菜单项：有子项 = 手风琴分组，无子项 = 可点击叶子 -->
+    <t t-name="beautiful_theme.AppSidebar.MenuItem">
+        <li>
+            <t t-if="item.childrenTree and item.childrenTree.length">
+                <button class="o_bt_sb_link o_bt_sb_group"
+                        t-att-title="item.name"
+                        t-on-click="() => this.toggleSection(item, depth)">
+                    <span class="o_bt_sb_label" t-esc="item.name"/>
+                    <i class="fa o_bt_sb_chevron" t-att-class="isOpen(item, depth) ? 'fa-angle-down' : 'fa-angle-right'"/>
+                </button>
+                <ul t-if="isOpen(item, depth)" class="o_bt_sb_tree">
+                    <t t-foreach="item.childrenTree" t-as="child" t-key="child.id">
+                        <t t-call="beautiful_theme.AppSidebar.MenuItem">
+                            <t t-set="item" t-value="child"/>
+                            <t t-set="depth" t-value="depth + 1"/>
+                        </t>
+                    </t>
+                </ul>
+            </t>
+            <t t-else="">
+                <button class="o_bt_sb_link"
+                        t-att-title="item.name"
+                        t-att-data-menu-xmlid="item.xmlid"
+                        t-on-click="() => this.onMenuClick(item)">
+                    <span class="o_bt_sb_label" t-esc="item.name"/>
+                </button>
+            </t>
+        </li>
+    </t>
+
+</templates>

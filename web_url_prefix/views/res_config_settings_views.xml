@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.web.url.prefix</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="URL &amp; Branding" string="URL &amp; Branding" name="web_url_prefix" groups="base.group_system">
+                    <block title="Backend URL" name="web_url_prefix_url">
+                        <setting string="URL Prefix" id="web_url_prefix_setting"
+                                 help="Replace the '/odoo' part of backend URLs, e.g. 'app' gives /app/action-123. Leave empty to keep '/odoo'. Applied on save, no restart needed. Reserved words (web, odoo, website, ...) are rejected.">
+                            <div class="content-group">
+                                <div class="row mt8">
+                                    <label for="backend_url_prefix" class="col-3 o_light_label"/>
+                                    <field name="backend_url_prefix" placeholder="app"/>
+                                </div>
+                            </div>
+                        </setting>
+                    </block>
+                    <block title="Browser Tab" name="web_url_prefix_branding">
+                        <setting string="Web App Name" id="web_app_name_setting"
+                                 help="Shown as the browser tab title and as the installed PWA name. Leave empty to keep 'Odoo'.">
+                            <div class="content-group">
+                                <div class="row mt8">
+                                    <label for="web_app_name" class="col-3 o_light_label"/>
+                                    <field name="web_app_name" placeholder="Odoo"/>
+                                </div>
+                            </div>
+                        </setting>
+                        <setting string="Favicon" id="backend_favicon_setting"
+                                 help="Icon shown in the browser tab (PNG or ICO, ideally 32x32 or 64x64). Leave empty to keep the Odoo icon.">
+                            <div class="content-group">
+                                <div class="row mt8">
+                                    <label for="backend_favicon" class="col-3 o_light_label"/>
+                                    <field name="backend_favicon" widget="image" class="oe_avatar" style="max-width: 64px;"/>
+                                </div>
+                            </div>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+</odoo>

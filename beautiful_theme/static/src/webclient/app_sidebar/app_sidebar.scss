@@ -1,0 +1,289 @@
+//
+// 左侧应用/菜单侧边栏 + 瘦身顶栏布局
+// 颜色走 CSS 自定义属性，各主题在自己的 style.scss 里覆盖 --bt-sb-* 即可换肤
+//
+
+$bt-header-height: 40px;
+$bt-sidebar-width: 212px;
+$bt-sidebar-rail: 56px;
+
+// ---- 顶栏瘦身：覆盖 navbar 的高度变量（46px -> 40px）----
+.o_main_navbar {
+    --o-navbar-height: #{$bt-header-height};
+}
+
+
+// ---- 侧边栏本体 ----
+.o_bt_sidebar {
+    // 默认配色（Odoo Standard 主题下生效；各主题覆盖这些变量）
+    // 背景用主题同族的浅色渐变，与内容区形成区分
+    --bt-sb-bg: linear-gradient(180deg, #F7F6FA 0%, #F0EEF6 100%);
+    --bt-sb-border: #E4E1EC;
+    --bt-sb-text: #374151;
+    --bt-sb-muted: #6B7280;
+    --bt-sb-hover: rgba(113, 99, 158, .08);
+    --bt-sb-active-bg: rgba(113, 99, 158, .14);
+    --bt-sb-active-text: #4B3F6E;
+
+    // 一整列：从屏幕顶贯穿到底，顶栏右移让位
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 900;
+    display: flex;
+    flex-direction: column;
+    width: $bt-sidebar-width;
+    background: var(--bt-sb-bg);
+    border-right: 1px solid var(--bt-sb-border);
+    color: var(--bt-sb-text);
+    transition: width .22s ease;
+    overflow: hidden;
+
+    &.o_bt_sb_collapsed {
+        width: $bt-sidebar-rail;
+
+        .o_bt_sb_app_name {
+            display: none;
+        }
+
+        .o_bt_sb_app {
+            justify-content: center;
+            padding: 8px 0;
+        }
+
+        .o_bt_sb_app_toggle {
+            display: none;
+        }
+
+        .o_bt_sb_brand {
+            justify-content: center;
+            padding: 0;
+
+            .o_bt_sb_logo {
+                width: 32px;
+                height: 32px;
+            }
+        }
+    }
+
+    // ---- 顶部公司品牌区（明显高于普通菜单项，压阵整列）----
+    .o_bt_sb_brand {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        flex: 0 0 auto;
+        height: 64px;
+        padding: 0 14px;
+        border-bottom: 1px solid var(--bt-sb-border);
+
+        .o_bt_sb_logo {
+            flex: 0 0 auto;
+            width: 38px;
+            height: 38px;
+            padding: 2px;
+            border: 1px solid var(--bt-sb-border);
+            border-radius: 50%;
+            background: #FFFFFF;
+            object-fit: contain;
+        }
+
+        .o_bt_sb_company {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--bt-sb-text);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+
+    // ---- 滚动区 ----
+    .o_bt_sb_body {
+        flex: 1 1 auto;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 8px 6px;
+        scrollbar-width: thin;
+        scrollbar-color: var(--bt-sb-border) transparent;
+    }
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    // ---- 一级应用（行 = 名称按钮 + 折叠箭头）----
+    .o_bt_sb_app_row {
+        display: flex;
+        align-items: center;
+        border-radius: 8px;
+
+        &:hover {
+            background: var(--bt-sb-hover);
+        }
+
+        &.o_bt_sb_active {
+            background: var(--bt-sb-active-bg);
+
+            .o_bt_sb_app {
+                color: var(--bt-sb-active-text);
+            }
+        }
+    }
+
+    .o_bt_sb_app {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        flex: 1 1 auto;
+        min-width: 0;
+        border: 0;
+        border-radius: 8px;
+        padding: 7px 9px;
+        background: transparent;
+        color: var(--bt-sb-text);
+        font-weight: 600;
+        font-size: 13px;
+        text-align: left;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+
+    .o_bt_sb_app_name {
+        flex: 1 1 auto;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .o_bt_sb_app_toggle {
+        flex: 0 0 auto;
+        border: 0;
+        border-radius: 6px;
+        padding: 6px 10px;
+        background: transparent;
+        color: var(--bt-sb-muted);
+        cursor: pointer;
+
+        &:hover {
+            color: var(--bt-sb-text);
+        }
+    }
+
+    .o_bt_sb_app_icon {
+        flex: 0 0 auto;
+        width: 24px;
+        height: 24px;
+        border-radius: 6px;
+        object-fit: contain;
+    }
+
+    .o_bt_sb_app_letter {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--bt-sb-active-bg);
+        color: var(--bt-sb-active-text);
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    // ---- 二级/三级菜单树（结构性缩进 + 层级引导线）----
+    .o_bt_sb_tree {
+        margin: 2px 0 6px 18px;
+        padding-left: 4px;
+        border-left: 1px solid var(--bt-sb-border);
+
+        // 嵌套层自动累加缩进
+        .o_bt_sb_tree {
+            margin-left: 10px;
+        }
+    }
+
+    .o_bt_sb_link {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 6px;
+        width: 100%;
+        border: 0;
+        border-radius: 6px;
+        padding: 5px 8px;
+        background: transparent;
+        color: var(--bt-sb-text); // 叶子菜单同样用正常文字色（不置灰）
+        font-size: 12.5px;
+        text-align: left;
+        cursor: pointer;
+
+        &:hover {
+            background: var(--bt-sb-hover);
+        }
+    }
+
+    // 超长文字截断（完整名称走 title 悬停提示）
+    .o_bt_sb_label {
+        flex: 1 1 auto;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .o_bt_sb_group {
+        font-weight: 600;
+        color: var(--bt-sb-text);
+    }
+
+    .o_bt_sb_chevron {
+        flex: 0 0 auto;
+        font-size: 11px;
+        opacity: .6;
+    }
+
+}
+
+// ---- 顶栏左端的侧栏折叠按钮 ----
+.o_bt_nav_toggle {
+    @extend %-main-navbar-entry-base !optional;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    height: 100%;
+    padding: 0 .8em;
+    font-size: 14px;
+    cursor: pointer;
+    opacity: .85;
+
+    &:hover {
+        opacity: 1;
+        background: var(--NavBar-entry-bg--hover, rgba(0, 0, 0, .08));
+    }
+}
+
+// ---- 顶栏与内容区让位（仅桌面端；侧栏存在才生效，fullscreen 时组件不渲染自动复原）----
+// 注意 .o_action_manager 用直接子选择器：多标签面板内部还嵌套同类名，不能二次让位
+@include media-breakpoint-up(md) {
+    body.o_web_client:has(> .o_bt_sidebar) {
+        > .o_action_manager,
+        .o_main_navbar {
+            margin-left: $bt-sidebar-width;
+            transition: margin-left .22s ease;
+        }
+    }
+
+    body.o_web_client:has(> .o_bt_sidebar.o_bt_sb_collapsed) {
+        > .o_action_manager,
+        .o_main_navbar {
+            margin-left: $bt-sidebar-rail;
+        }
+    }
+}
+
+// ---- 小屏：隐藏侧栏，回退到官方内置的手机滑出菜单 ----
+@include media-breakpoint-down(md) {
+    .o_bt_sidebar {
+        display: none;
+    }
+}

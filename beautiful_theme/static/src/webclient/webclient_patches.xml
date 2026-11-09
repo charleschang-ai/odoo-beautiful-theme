@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <!-- WebClient：NavBar 之后插入侧边栏（同处 !state.fullscreen 分支，全屏动作时一并隐藏）。
+         企业版 WebClientEnterprise 沿用 web.WebClient 模板名，扩展在企业版下同样生效 -->
+    <t t-name="beautiful_theme.WebClient" t-inherit="web.WebClient" t-inherit-mode="extension">
+        <xpath expr="//NavBar" position="after">
+            <AppSidebar/>
+        </xpath>
+        <!-- 多标签容器接管 ActionContainer（keep-alive，见 multi_tab_container.js） -->
+        <xpath expr="//ActionContainer" position="replace">
+            <MultiTabContainer fullscreen="state.fullscreen"/>
+        </xpath>
+    </t>
+
+    <!-- 企业版 NavBar：必须扩展 web_enterprise.EnterpriseNavBar 而非 web.NavBar ——
+         primary 派生模板只应用 blockId 不大于它自己的扩展，本模块依赖 web_enterprise、
+         资源在其后加载，对 web.NavBar 的扩展进不了 EnterpriseNavBar。
+
+         改动：
+         1. 摘掉横排的二级菜单（sections），导航职责交给一整列侧边栏；
+            企业版自带的 o_menu_toggle（九宫格 + 当前应用名）保留 —— 它是
+            全屏主屏幕（Home Menu）的开关，也是当前应用的品牌位。
+         2. 顶栏最左端插入侧栏折叠按钮（状态共享见 navbar_patch.js）。
+         手机端官方抽屉（web.NavBar.AppsMenu.Sidebar）不受影响。 -->
+    <t t-name="beautiful_theme.EnterpriseNavBar" t-inherit="web_enterprise.EnterpriseNavBar" t-inherit-mode="extension">
+        <xpath expr="//t[@t-call='web.NavBar.SectionsMenu']" position="replace"/>
+        <xpath expr="//a[hasclass('o_menu_toggle')]" position="before">
+            <button t-if="!this.ui.isSmall"
+                    class="o_bt_nav_toggle"
+                    t-att-title="btSidebar.collapsed ? '展开菜单' : '收起菜单'"
+                    t-on-click="() => this.btToggleSidebar()">
+                <i class="fa" t-att-class="btSidebar.collapsed ? 'fa-indent' : 'fa-outdent'"/>
+            </button>
+        </xpath>
+    </t>
+
+</templates>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="beautiful_theme.ThemeSwitcher">
+        <div class="o_bt_systray">
+            <!-- systray 入口按钮 -->
+            <button class="o_bt_toggle" t-on-click="toggle" title="切换主题 / Switch Theme" aria-label="Switch Theme">
+                <i class="fa fa-paint-brush" role="img"/>
+            </button>
+
+            <!-- 遮罩：点击空白处收起抽屉 -->
+            <div t-if="state.open" class="o_bt_backdrop" t-on-click="close"/>
+
+            <!-- 右侧抽屉 -->
+            <aside class="o_bt_drawer" t-att-class="{ o_bt_open: state.open }">
+                <div class="o_bt_header">
+                    <div>
+                        <h5 class="o_bt_title">界面主题</h5>
+                        <span class="o_bt_hint">仅对当前用户生效</span>
+                    </div>
+                    <button class="o_bt_close" t-on-click="close" aria-label="Close">
+                        <i class="fa fa-times"/>
+                    </button>
+                </div>
+
+                <div class="o_bt_cards">
+                    <t t-foreach="themes" t-as="theme" t-key="theme.id">
+                        <div class="o_bt_card"
+                             t-att-class="{ o_bt_active: isActive(theme.id) }"
+                             t-on-click="() => this.onSelect(theme.id)"
+                             role="button">
+                            <!-- 渐变预览条（模拟顶栏），ink 控制模拟元素深浅 -->
+                            <div t-attf-class="o_bt_preview {{ theme.ink === 'dark' ? 'o_bt_ink_dark' : '' }}"
+                                 t-att-style="'background: ' + theme.preview">
+                                <span class="o_bt_preview_dot"/>
+                                <span class="o_bt_preview_line"/>
+                            </div>
+                            <div class="o_bt_meta">
+                                <div class="o_bt_names">
+                                    <span class="o_bt_name" t-esc="theme.name"/>
+                                    <span class="o_bt_sub" t-esc="theme.subtitle"/>
+                                </div>
+                                <div class="o_bt_dots">
+                                    <t t-foreach="theme.dots" t-as="dot" t-key="dot_index">
+                                        <span class="o_bt_dot" t-att-style="'background: ' + dot"/>
+                                    </t>
+                                </div>
+                            </div>
+                            <i t-if="state.saving === theme.id" class="fa fa-circle-o-notch fa-spin o_bt_check"/>
+                            <i t-elif="isActive(theme.id)" class="fa fa-check-circle o_bt_check"/>
+                        </div>
+                    </t>
+                </div>
+            </aside>
+        </div>
+    </t>
+
+</templates>

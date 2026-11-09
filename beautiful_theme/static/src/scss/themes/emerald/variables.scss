@@ -1,0 +1,64 @@
+///
+/// Emerald · 翠绿（清爽薄荷 · 白绿渐变）
+/// ---------------------------------------------------------------------------
+/// 设计语言：清爽自然 —— 白→薄荷渐变顶栏，中性冷灰阶打底，
+/// 翡翠绿 #059669 作为唯一强调色，页面透着淡淡的薄荷气息。
+/// 本文件被插入到所有官方变量之前，!default 声明全部让位于这里的值。
+///
+/// 注意：品牌变量必须保持纯色（官方对其做 darken()/mix() 派生计算），
+/// 渐变只允许出现在 $o-navbar-background 与 style.scss 的规则里。
+///
+
+// = 灰阶（冷石板刻度，保证正文可读性）==========================
+$o-gray-100: #F1F5F9;
+$o-gray-200: #E2E8F0;
+$o-gray-300: #CBD5E1;
+$o-gray-400: #94A3B8;
+$o-gray-500: #64748B;
+$o-gray-600: #475569;
+$o-gray-700: #334155;
+$o-gray-800: #1E293B;
+$o-gray-900: #0F172A;
+
+// = 品牌色（翡翠绿）============================================
+$o-community-color: #059669;
+$o-brand-odoo: #059669;
+$o-brand-primary: #059669;
+$o-action: #059669;
+$o-main-link-color: #047857;
+
+// 组件激活态（翡翠绿 10% 淡化）
+$o-component-active-color: #0F172A;
+$o-component-active-bg: #E2F6EC;
+$o-component-active-border: #059669;
+
+// = 顶部菜单栏（白→薄荷渐变 · 墨绿文字）========================
+$o-navbar-background: linear-gradient(180deg, #FFFFFF 0%, #F0FBF5 100%);
+$o-navbar-border-bottom: 1px solid #DFF0E7;
+$o-navbar-padding-v: 6px;
+$o-navbar-entry-border-radius: 8px;
+$o-navbar-entry-color: #2E463C;
+$o-navbar-entry-color--hover: #0F2B21;
+$o-navbar-entry-bg--hover: rgba(#059669, .09);
+$o-navbar-brand-color: #2E463C;
+$o-navbar-badge-bg: #059669;
+$o-navbar-badge-color: #FFFFFF;
+$o-navbar-badge-text-shadow: none;
+
+// = 页面 / 视图背景 ============================================
+// 纯色兜底（$body-bg 等处使用）；渐变在 style.scss 中叠加
+$o-webclient-background-color: #F3FAF6;
+$o-view-background-color: #FFFFFF;
+
+// 控制面板
+$o-control-panel-border-bottom: 1px solid #E4F1E9;
+
+// = 企业版（web_enterprise）====================================
+// 企业版以 $o-enterprise-color 派生 $o-brand-odoo/$o-brand-primary，
+// 必须与主题品牌色对齐，否则过期面板等企业组件颜色跑偏
+$o-enterprise-color: #059669;
+$o-enterprise-action-color: #059669;
+
+// 全屏主屏幕（Home Menu）：应用名文字
+$o-home-menu-caption-color: #2E463C;
+$o-home-menu-caption-shadow: none;

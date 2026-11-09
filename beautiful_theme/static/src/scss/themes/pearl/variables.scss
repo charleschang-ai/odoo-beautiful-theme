@@ -1,0 +1,64 @@
+///
+/// Pearl · 珍珠白（官方企业版配色 · 白色渐变顶栏）
+/// ---------------------------------------------------------------------------
+/// 配色取自 Odoo 官方企业版（web_enterprise）的设计语言：
+/// 白色顶栏 + 企业紫 #714B67 + 行动青 #017E84 + 企业版灰阶。
+/// 本文件被插入到所有官方变量之前，!default 声明全部让位于这里的值。
+///
+/// 注意：品牌变量必须保持纯色（官方对其做 darken()/mix() 派生计算），
+/// 渐变只允许出现在 $o-navbar-background 与 style.scss 的规则里。
+///
+
+// = 灰阶（企业版刻度）==========================================
+$o-gray-100: #F9FAFB;
+$o-gray-200: #E7E9ED;
+$o-gray-300: #D8DADD;
+$o-gray-400: #9A9CA5;
+$o-gray-500: #7C7F89;
+$o-gray-600: #5F636F;
+$o-gray-700: #374151;
+$o-gray-800: #1F2937;
+$o-gray-900: #111827;
+
+// = 品牌色（企业版）============================================
+$o-community-color: #714B67;
+$o-brand-odoo: #714B67;
+$o-brand-primary: #714B67;
+$o-action: #017E84;
+$o-main-link-color: #017E84;
+
+// 组件激活态（企业版：行动青 10% 淡化）
+$o-component-active-color: #000000;
+$o-component-active-bg: #E6F2F3;
+$o-component-active-border: #017E84;
+
+// = 顶部菜单栏（珍珠白渐变 · 深灰文字）=========================
+$o-navbar-background: linear-gradient(180deg, #FFFFFF 0%, #F7F6F8 100%);
+$o-navbar-border-bottom: 1px solid #E7E4EA;
+$o-navbar-padding-v: 6px;
+$o-navbar-entry-border-radius: 8px;
+$o-navbar-entry-color: #374151;
+$o-navbar-entry-color--hover: #111827;
+$o-navbar-entry-bg--hover: rgba(#714B67, .08);
+$o-navbar-brand-color: #374151;
+$o-navbar-badge-bg: #DC2626;
+$o-navbar-badge-color: #FFFFFF;
+$o-navbar-badge-text-shadow: none;
+
+// = 页面 / 视图背景 ============================================
+// 纯色兜底（$body-bg 等处使用）；渐变在 style.scss 中叠加
+$o-webclient-background-color: #F8F7F9;
+$o-view-background-color: #FFFFFF;
+
+// 控制面板
+$o-control-panel-border-bottom: 1px solid #ECE9EE;
+
+// = 企业版（web_enterprise）====================================
+// 企业版以 $o-enterprise-color 派生 $o-brand-odoo/$o-brand-primary，
+// 必须与主题品牌色对齐，否则过期面板等企业组件颜色跑偏
+$o-enterprise-color: #714B67;
+$o-enterprise-action-color: #017E84;
+
+// 全屏主屏幕（Home Menu）：应用名文字
+$o-home-menu-caption-color: #374151;
+$o-home-menu-caption-shadow: none;
