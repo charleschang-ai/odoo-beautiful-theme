@@ -12,9 +12,11 @@ Odoo 19 后台多主题切换模块（社区版）
 - systray 调色板按钮 + 右侧抽屉选择主题
 - 内置两套商务高端主题：Aurora（极光·靛蓝紫）/ Obsidian Gold（曜金·石墨金）
     """,
-    "author": "AstaCRM",
+    "author": "Don Shan",
     "website": "https://www.astacrm.com",
     "license": "LGPL-3",
+    'price': 39,
+    'currency': "USD",
     "depends": ["web"],
     "data": [
         "views/webclient_templates.xml",
