@@ -13,8 +13,10 @@ bookmarks, etc. are not broken.
     """,
     'version': '19.0.2.0.0',
     'category': 'Hidden',
-    'author': 'AstaCRM',
-    'website': 'https://www.astacrm.com',
+     "author": "Don Shan",
+    "license": "LGPL-3",
+    'price': 39,
+    'currency': "USD",
     'license': 'LGPL-3',
     'depends': ['web', 'base_setup'],
     'data': [
