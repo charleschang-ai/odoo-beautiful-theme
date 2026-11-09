@@ -54,15 +54,6 @@
                 </t>
             </div>
 
-            <!-- 企业版全屏主屏幕（Home Menu）：可见覆盖层挂载，盖在标签区之上；
-                 o_home_menu_background 让官方背景规则（CSS 变量驱动）直接生效 -->
-            <div t-if="state.home and state.home.Component"
-                 class="o_bt_home_overlay o_home_menu_background">
-                <t t-component="state.home.Component"
-                   t-props="state.home.componentProps"
-                   t-key="state.home.id"/>
-            </div>
-
             <!-- 全局管理器的隐藏挂载：保证首次加载/命令面板等全局 doAction 正常 resolve -->
             <div class="o_bt_ghost" aria-hidden="true">
                 <t t-if="state.ghost.Component"

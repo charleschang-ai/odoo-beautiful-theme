@@ -46,13 +46,3 @@ $o-view-background-color: #FFFFFF;
 
 // 控制面板
 $o-control-panel-border-bottom: 1px solid #EBE4D5;
-
-// = 企业版（web_enterprise）====================================
-// 企业版以 $o-enterprise-color 派生 $o-brand-odoo/$o-brand-primary，
-// 必须与主题品牌色对齐，否则过期面板等企业组件颜色跑偏
-$o-enterprise-color: #1F2937;
-$o-enterprise-action-color: #B8860B;
-
-// 全屏主屏幕（Home Menu）：曜石深底 → 应用名用浅金文字
-$o-home-menu-caption-color: #EFE6CE;
-$o-home-menu-caption-shadow: 0 1px 2px rgba(0, 0, 0, .55);

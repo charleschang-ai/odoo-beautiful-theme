@@ -2,32 +2,11 @@ import { Component, EventBus, onWillDestroy, useState, useSubEnv, xml } from "@o
 import { useService, useBus } from "@web/core/utils/hooks";
 import { browser } from "@web/core/browser/browser";
 import { router } from "@web/core/browser/router";
-import { registry } from "@web/core/registry";
 import { Dropdown } from "@web/core/dropdown/dropdown";
 import { DropdownItem } from "@web/core/dropdown/dropdown_item";
-import { makeActionManager, standardActionServiceProps } from "@web/webclient/actions/action_service";
+import { makeActionManager } from "@web/webclient/actions/action_service";
 
 const STORAGE_KEY = "bt_multi_tabs";
-
-/**
- * 空白客户端动作（企业版 Home Menu 集成用）。
- *
- * 企业版全屏主屏幕本身是全局管理器上的一个客户端动作（tag="menu"，见
- * web_enterprise 的 home_menu_service）。用户从主屏幕/侧栏选中菜单后，
- * 动作被本容器路由进标签管理器，全局管理器的当前控制器仍是 HomeMenuAction
- * —— hasHomeMenu 不会复原、body 的 o_home_menu_background 类和导航栏的
- * 主屏幕形态会一直挂着。让全局管理器切到这个空白动作，HomeMenuAction 即
- * 正常卸载；空白组件挂在 ghost 里不可见。它同时充当主屏幕的"背景动作"：
- * 再次打开主屏幕时（doAction("menu") 压栈其上），导航栏出现返回箭头，
- * home_menu.toggle(false) 的 action.restore() 也有处可退。
- */
-class TabDeskAction extends Component {
-    static template = xml`<div class="o_bt_tab_desk"/>`;
-    static props = { ...standardActionServiceProps };
-    static target = "current";
-    static displayName = "工作台";
-}
-registry.category("actions").add("beautiful_theme.tab_desk", TabDeskAction);
 
 // 标签粒度："menu" = 每个菜单一个标签；"app" = 每个应用一个标签。
 // 应用根也是菜单（同一 id 空间），两种模式的 localStorage 数据互相兼容。
@@ -46,9 +25,6 @@ const TAB_GRANULARITY = "menu";
  * - 菜单点击被 patch 直接路由到目标标签的管理器（单次执行）；
  *   其余全局动作（首次加载/命令面板/浏览器后退）由全局总线捕获后
  *   在对应标签内重放，全局渲染结果放入隐藏 ghost 挂载以保证 doAction 正常 resolve
- * - 企业版主屏幕（Home Menu，tag="menu" 的全局客户端动作）可见挂载为
- *   全屏覆盖层：标签树保活不动，选中应用后经空白动作 tab_desk 退场
- *   （详见 TabDeskAction 注释）
  *
  * 已知边界（v1）：
  * - 关闭标签后其管理器在 rpcBus 上的监听不会移除（官方 makeActionManager 未提供
@@ -121,55 +97,20 @@ export class MultiTabContainer extends Component {
     setup() {
         this.menuService = useService("menu");
         this.actionService = useService("action"); // 全局管理器（用于 loadState 拦截）
-        this.homeMenu = useService("home_menu");   // 企业版主屏幕状态（reactive）
         this.state = useState({
             tabs: [],        // [{ id: appId, name, icon, lastActionId }]
             activeId: null,
             ghost: {},       // 全局管理器的渲染结果（隐藏挂载，保证其 doAction resolve）
-            home: null,      // 企业版主屏幕的渲染信息（可见挂载为全屏覆盖层）
         });
         // 运行时对象（管理器/总线）不进 reactive，避免代理干扰
         this.runtime = new Map(); // id -> { bus, manager, started }
 
         this._restore();
 
-        // 全局动作捕获：首次加载 / 命令面板 / 浏览器后退等。
-        // 企业版主屏幕（tag="menu"）单独分流：可见挂载为覆盖层，不路由进标签；
-        // 空白动作（tab_desk，主屏幕的退场垫底）只进 ghost，不路由
+        // 全局动作捕获：首次加载 / 命令面板 / 浏览器后退等
         useBus(this.env.bus, "ACTION_MANAGER:UPDATE", ({ detail: info }) => {
-            info = info || {};
-            const tag = info.componentProps?.action?.tag;
-            if (tag === "menu") {
-                // 记住进主屏幕前的 URL：空白动作退场时还原（见下）
-                if (!this.state.home) {
-                    this._preHomeUrl =
-                        browser.location.pathname + browser.location.search;
-                }
-                this.state.home = info;
-                return;
-            }
-            this.state.home = null;
-            this.state.ghost = info;
-            if (tag === "beautiful_theme.tab_desk") {
-                // 空白动作挂载时会把 /odoo/action-beautiful_theme.tab_desk 推进
-                // 地址栏（action_service 在控制器 mount 时排队 pushState，经
-                // setTimeout 刷出）。标记待还原，在 UI-UPDATED（mount 同步时刻，
-                // 推送已排队未刷出）取消该推送并还原进主屏幕前的 URL
-                this._restoreUrlOnMount = this._preHomeUrl || "/odoo";
-                this._preHomeUrl = null;
-                return;
-            }
-            this._routeGlobal(info);
-        });
-
-        // 空白动作 mount 时刻：取消其排队中的 URL 推送并还原（见上）。
-        // 标签管理器的 UI-UPDATED 走各自的标签总线，不会到这里
-        useBus(this.env.bus, "ACTION_MANAGER:UI-UPDATED", () => {
-            if (this._restoreUrlOnMount) {
-                router.cancelPushes();
-                browser.history.replaceState(null, "", this._restoreUrlOnMount);
-                this._restoreUrlOnMount = null;
-            }
+            this.state.ghost = info || {};
+            this._routeGlobal(info || {});
         });
 
         // 菜单点击直接路由到目标标签（单次执行，不经过全局管理器）
@@ -180,14 +121,6 @@ export class MultiTabContainer extends Component {
             menu = typeof menu === "number" ? menuSvc.getMenu(menu) : menu;
             if (!menu || !menu.actionID) {
                 return;
-            }
-            // 主屏幕正打开：先让全局管理器切到空白动作卸载 HomeMenuAction
-            // （复原 hasHomeMenu / body 类 / 导航栏形态），再进标签；
-            // 顺序在前，最终 URL 由标签管理器的真实动作落定
-            if (this.homeMenu.hasHomeMenu) {
-                await this.actionService.doAction("beautiful_theme.tab_desk", {
-                    clearBreadcrumbs: true,
-                });
             }
             const tab = this._ensureTab(menu);
             const rt = this._ensureRuntime(tab);
@@ -210,11 +143,6 @@ export class MultiTabContainer extends Component {
         globalAction.loadState = async (...args) => {
             const state = args[0] || router.current;
             const firstAction = state.actionStack && state.actionStack[0] && state.actionStack[0].action;
-            // 主屏幕/空白动作不属于任何标签：交回默认流程
-            // （false → webclient 走 _loadDefaultApp → 企业版打开主屏幕）
-            if (firstAction === "menu" || firstAction === "beautiful_theme.tab_desk") {
-                return false;
-            }
             let menu = null;
             if (firstAction) {
                 menu = this.menuService
@@ -277,30 +205,18 @@ export class MultiTabContainer extends Component {
     _ensureRuntime(tab) {
         if (!this.runtime.has(tab.id)) {
             const bus = new EventBus();
+            // 管理器专属 env：原型链继承真实 env（services/isSmall），bus 换成标签总线。
+            // env 被 OWL 冻结（bus 只读），必须用属性描述符定义而非 Object.assign 赋值
+            const managerEnv = Object.create(this.env, {
+                bus: { value: bus, configurable: true },
+            });
             const rt = {
                 bus,
-                manager: null,   // 下方 makeActionManager 赋值（managerEnv.services 需先引用 rt）
+                manager: makeActionManager(managerEnv),
                 started: false,
                 info: {},        // 本标签最后一次渲染信息（面板可能晚于事件出现）
                 paneRender: null,
             };
-            // 管理器专属 env：原型链继承真实 env（services/isSmall），bus 换成标签总线。
-            // services 里的 action 必须换成本标签自己的管理器：函数型 client action
-            // （如企业版文档的 document_action_preference）会在运行时用 env.services.action
-            // .doAction 跳到真正的窗口动作。若沿用全局 action，跳转会落到全局管理器，
-            // 本标签管理器什么都没渲染 → 标签空白，且重定向出的窗口动作 id 不匹配任何菜单，
-            // _routeGlobal 会误路由到兜底/phantom 标签。指向自身即复刻 stock Odoo 的
-            // 单管理器重入语义（rt.manager 晚于本 Proxy 赋值，用 getter 惰性读取）
-            const services = new Proxy(this.env.services, {
-                get: (target, key) => (key === "action" ? rt.manager : target[key]),
-                has: (target, key) => key === "action" || key in target,
-            });
-            // env 被 OWL 冻结（bus 只读），必须用属性描述符定义而非 Object.assign 赋值
-            const managerEnv = Object.create(this.env, {
-                bus: { value: bus, configurable: true },
-                services: { value: services, configurable: true },
-            });
-            rt.manager = makeActionManager(managerEnv);
             // 监听器随 runtime 创建即挂载，先于任何 doAction，事件不丢
             bus.addEventListener("ACTION_MANAGER:UPDATE", ({ detail: info }) => {
                 rt.info = info || {};

@@ -5,7 +5,6 @@
 
 .o_bt_mt_root {
     // 接管原 .o_action_manager 的定位职责，内部转纵向布局
-    position: relative; // 企业版主屏幕覆盖层的定位基准
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -185,18 +184,6 @@
             }
         }
     }
-}
-
-// ---- 企业版全屏主屏幕覆盖层 ----
-// 盖住标签栏与面板区（主屏幕是全屏形态）；标签树在下层保活。
-// 背景由官方 .o_home_menu_background 规则提供（主题经 --homeMenu-bg-* 换肤）
-.o_bt_home_overlay {
-    position: absolute;
-    inset: 0;
-    z-index: 5;
-    display: flex;
-    flex-flow: column nowrap;
-    overflow: hidden; // 内部 .o_home_menu 自带 h-100 overflow-auto
 }
 
 // ---- 全局管理器隐藏挂载 ----

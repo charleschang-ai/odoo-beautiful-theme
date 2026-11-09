@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
 
-    <!-- WebClient：NavBar 之后插入侧边栏（同处 !state.fullscreen 分支，全屏动作时一并隐藏）。
-         企业版 WebClientEnterprise 沿用 web.WebClient 模板名，扩展在企业版下同样生效 -->
+    <!-- WebClient：NavBar 之后插入侧边栏（同处 !state.fullscreen 分支，全屏动作时一并隐藏） -->
     <t t-name="beautiful_theme.WebClient" t-inherit="web.WebClient" t-inherit-mode="extension">
         <xpath expr="//NavBar" position="after">
             <AppSidebar/>
@@ -13,25 +12,30 @@
         </xpath>
     </t>
 
-    <!-- 企业版 NavBar：必须扩展 web_enterprise.EnterpriseNavBar 而非 web.NavBar ——
-         primary 派生模板只应用 blockId 不大于它自己的扩展，本模块依赖 web_enterprise、
-         资源在其后加载，对 web.NavBar 的扩展进不了 EnterpriseNavBar。
-
-         改动：
-         1. 摘掉横排的二级菜单（sections），导航职责交给一整列侧边栏；
-            企业版自带的 o_menu_toggle（九宫格 + 当前应用名）保留 —— 它是
-            全屏主屏幕（Home Menu）的开关，也是当前应用的品牌位。
-         2. 顶栏最左端插入侧栏折叠按钮（状态共享见 navbar_patch.js）。
-         手机端官方抽屉（web.NavBar.AppsMenu.Sidebar）不受影响。 -->
-    <t t-name="beautiful_theme.EnterpriseNavBar" t-inherit="web_enterprise.EnterpriseNavBar" t-inherit-mode="extension">
+    <!-- NavBar：桌面端摘掉横排的二级菜单（sections）与左上角应用名（o_menu_brand），
+         导航职责全部交给一整列侧边栏；两个节点均只在桌面端渲染，手机端官方抽屉不受影响 -->
+    <t t-name="beautiful_theme.NavBar" t-inherit="web.NavBar" t-inherit-mode="extension">
         <xpath expr="//t[@t-call='web.NavBar.SectionsMenu']" position="replace"/>
-        <xpath expr="//a[hasclass('o_menu_toggle')]" position="before">
+        <!-- o_menu_brand 在 DropdownItem 组件上是带引号的 class prop，
+             hasclass() 与 contains(@class) 均不适用（后者 debug 模式告警），
+             改用同节点唯一的 t-esc 锚定 -->
+        <xpath expr="//DropdownItem[@t-esc='currentApp.name']" position="replace"/>
+        <!-- 顶栏最左端：侧栏折叠按钮（状态共享见 navbar_patch.js） -->
+        <xpath expr="//t[@t-call='web.NavBar.AppsMenu']" position="before">
             <button t-if="!this.ui.isSmall"
                     class="o_bt_nav_toggle"
                     t-att-title="btSidebar.collapsed ? '展开菜单' : '收起菜单'"
                     t-on-click="() => this.btToggleSidebar()">
                 <i class="fa" t-att-class="btSidebar.collapsed ? 'fa-indent' : 'fa-outdent'"/>
             </button>
+        </xpath>
+    </t>
+
+    <!-- AppsMenu：桌面端摘掉九宫格应用下拉（侧边栏已列出全部应用）。
+         用占位 div 保留 t-if，避免破坏后面 t-else 的配对 -->
+    <t t-name="beautiful_theme.NavBar.AppsMenu" t-inherit="web.NavBar.AppsMenu" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('o_navbar_apps_menu')]" position="replace">
+            <div t-if="!isScopedApp" class="d-none"/>
         </xpath>
     </t>
 

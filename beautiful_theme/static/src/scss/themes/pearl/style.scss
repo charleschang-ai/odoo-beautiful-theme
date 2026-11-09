@@ -36,7 +36,9 @@ $-pearl-shadow: rgba(63, 39, 57, .10);
     }
 
     // ---- Form 视图：白卡片浮于渐变之上 ----
-    .o_form_view {
+    // （限页面区域：明细行弹窗会把 o_form_view 挂到 .modal-content 上，
+    //   全局透明会把整个弹窗背景打穿，只剩中间 sheet 一块白）
+    .o_action_manager .o_form_view {
         background: transparent;
 
         .o_form_sheet_bg {
@@ -65,9 +67,9 @@ $-pearl-shadow: rgba(63, 39, 57, .10);
         }
     }
 
-    // ---- Kanban：透出渐变，卡片精致化 ----
-    .o_kanban_view,
-    .o_kanban_renderer {
+    // ---- Kanban：透出渐变，卡片精致化（同 Form，限页面区域）----
+    .o_action_manager .o_kanban_view,
+    .o_action_manager .o_kanban_renderer {
         background: transparent;
     }
 
@@ -89,12 +91,4 @@ $-pearl-shadow: rgba(63, 39, 57, .10);
     border: 1px solid $-pearl-line;
     border-radius: 14px;
     box-shadow: 0 24px 64px -24px rgba(63, 39, 57, .28);
-}
-
-// ---- 企业版全屏主屏幕（Home Menu）：珍珠白底 ----
-// 官方背景规则由 CSS 变量驱动（见 web_enterprise 的 home_menu_background.scss）
-.o_home_menu_background,
-.o_web_client.o_home_menu_background {
-    --homeMenu-bg-color: #F6F3F6;
-    --homeMenu-bg-image: url("/web_enterprise/static/img/background-light.svg");
 }

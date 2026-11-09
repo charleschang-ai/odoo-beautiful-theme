@@ -2,10 +2,6 @@ import { Component, useState } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { user } from "@web/core/user";
 import { browser } from "@web/core/browser/browser";
-import { cookie } from "@web/core/browser/cookie";
-
-// 官方暗色模式的伪主题 id（不写入 ui_theme，走企业版 color_scheme 通道）
-const DARK_ID = "__dark__";
 
 /**
  * 主题注册表。新增主题时：
@@ -18,18 +14,10 @@ const THEMES = [
     {
         id: "",
         name: "Odoo Standard",
-        subtitle: "企业版默认",
-        // 企业版默认是白色顶栏 + 企业紫 #714B67
-        preview: "linear-gradient(120deg, #FFFFFF 0%, #F3EFF2 100%)",
-        dots: ["#714B67", "#017E84", "#F8F9FA"],
-        ink: "dark",
-    },
-    {
-        id: DARK_ID,
-        name: "Odoo Dark",
-        subtitle: "官方暗色模式",
-        preview: "linear-gradient(120deg, #262A36 0%, #1E212B 100%)",
-        dots: ["#262A36", "#714B67", "#E7E9ED"],
+        subtitle: "社区版默认",
+        // 社区版默认顶栏是 #71639e（不是企业版的 #714B67）
+        preview: "linear-gradient(120deg, #71639E 0%, #857AB3 100%)",
+        dots: ["#71639E", "#017E84", "#F8F9FA"],
         ink: "light",
     },
     {
@@ -82,11 +70,6 @@ export class ThemeSwitcher extends Component {
         return user.settings.ui_theme || "";
     }
 
-    /** 企业版暗色模式是否生效（服务端按同一 cookie 选择 dark 资源包） */
-    get isDarkActive() {
-        return cookie.get("color_scheme") === "dark";
-    }
-
     toggle() {
         this.state.open = !this.state.open;
     }
@@ -96,11 +79,7 @@ export class ThemeSwitcher extends Component {
     }
 
     isActive(themeId) {
-        if (themeId === DARK_ID) {
-            return this.isDarkActive;
-        }
-        // 暗色模式下 webclient_bootstrap 的 dark 分支优先，主题包不加载
-        return !this.isDarkActive && this.currentTheme === themeId;
+        return this.currentTheme === themeId;
     }
 
     async onSelect(themeId) {
@@ -109,20 +88,9 @@ export class ThemeSwitcher extends Component {
         }
         this.state.saving = themeId;
         try {
-            if (themeId === DARK_ID) {
-                // 官方暗色模式：写企业版 color_scheme，ui_theme 保留
-                // （回到浅色时原主题自动恢复）
-                await user.setUserSettings("color_scheme", "dark");
-            } else {
-                // 写入 res.users.settings.ui_theme（按用户持久化），
-                // 刷新后服务端 webclient_rendering_context 按新值挂载主题资源包
-                await user.setUserSettings("ui_theme", themeId || false);
-                // 暗色模式生效中（cookie 或用户设置为 dark）时必须切回浅色，
-                // 否则模板的 dark 分支优先、主题包永远不加载
-                if (this.isDarkActive || user.settings.color_scheme === "dark") {
-                    await user.setUserSettings("color_scheme", "light");
-                }
-            }
+            // 写入 res.users.settings.ui_theme（按用户持久化），
+            // 刷新后服务端 webclient_rendering_context 按新值挂载主题资源包
+            await user.setUserSettings("ui_theme", themeId || false);
             browser.location.reload();
         } catch (error) {
             this.state.saving = null;
